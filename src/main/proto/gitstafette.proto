@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package gitstafette.v1;
+
+option go_package = "github.com/joostvdg/gitstafette/api/gitstafette_v1";
+
+option java_package = "net.kearos.gitstafette.grpc";
+option java_multiple_files = true;
+
+service Gitstafette {
+  rpc FetchWebhookEvents (WebhookEventsRequest) returns (stream WebhookEventsResponse){}
+  rpc WebhookEventPush (WebhookEventPushRequest) returns (WebhookEventPushResponse) {}
+  rpc WebhookEventStatus (WebhookEventStatusRequest) returns (WebhookEventStatusResponse) {}
+  rpc WebhookEventStatuses (WebhookEventStatusesRequest) returns (stream WebhookEventStatusResponse) {}
+  rpc WatchedRepositories (WatchedRepositoriesRequest) returns (WatchedRepositoriesResponse) {}
+}
+
+message WatchedRepositoriesRequest {
+  string client_id = 1;
+}
+
+message WatchedRepositoriesResponse {
+  repeated WatchedRepository watched_repositories = 1;
+}
+
+message WatchedRepository {
+  string client_id = 1;
+  string repository_id = 2;
+  int32 webhook_events_count = 3;
+}
+
+message WebhookEventStatusRequest {
+  string client_id = 1;
+  string repository_id = 2;
+}
+
+message WebhookEventStatusesRequest {
+  string client_id = 1;
+}
+
+message WebhookEventStatusResponse {
+  string server_id = 1;
+  uint32 count = 2;
+  string repository_id = 3;
+  string status = 4;
+}
+
+message WebhookEventsRequest {
+  string client_id = 1;
+  string repository_id = 2;
+  uint64 last_received_event_id = 3;
+  uint32 duration_secs = 4;
+}
+
+message WebhookEventPushResponse {
+  string response_code = 1;
+  string response_description = 2;
+  bool accepted = 3;
+}
+
+message WebhookEventPushRequest {
+  string cliend_id = 1;
+  string repository_id = 2;
+  WebhookEvent webhook_event = 3;
+}
+
+message WebhookEventsResponse {
+  repeated WebhookEvent webhook_events = 1;
+}
+
+message WebhookEvent {
+  string event_id = 1;
+  bytes body = 2;
+  repeated Header headers = 3;
+}
+
+message Header {
+  string name = 1;
+  string values = 2;
+}

@@ -1,6 +1,7 @@
 package net.kearos.gitstafette.explorer.controller;
 
 
+import net.kearos.gitstafette.explorer.client.GitstafetteClientClient;
 import net.kearos.gitstafette.explorer.client.GitstafetteServerClient;
 import net.kearos.gitstafette.explorer.model.Server;
 import net.kearos.gitstafette.explorer.model.WatchedRepositoryList;
@@ -23,9 +24,13 @@ public class ServerController {
 
     private final GitstafetteServerClient gitstafetteServerClient;
 
-    ServerController(GitstafetteServerClient gitstafetteServerClient) {
+    private final GitstafetteClientClient gitstafetteClientClient;
+
+    ServerController(GitstafetteServerClient gitstafetteServerClient, GitstafetteClientClient gitstafetteClientClient) {
         this.gitstafetteServerClient = gitstafetteServerClient;
+        this.gitstafetteClientClient = gitstafetteClientClient;
     }
+
 
     @GetMapping("/")
     List<Server> dummyServer() {
@@ -39,6 +44,14 @@ public class ServerController {
     WatchedRepositoryList collectFromRemoteServers() {
         logger.info("Collecting from remote server");
         var result = gitstafetteServerClient.getWatchedRepositoryList();
+        logger.info("Result collected: {}", result);
+        return result;
+    }
+
+    @GetMapping("/clients")
+    WatchedRepositoryList collectFromRemoteClients() {
+        logger.info("Collecting from remote client");
+        var result = gitstafetteClientClient.getWatchedRepositoryList();
         logger.info("Result collected: {}", result);
         return result;
     }

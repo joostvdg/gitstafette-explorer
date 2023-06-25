@@ -6,6 +6,7 @@ Java demo application (testing spring boot 3, spring 6) for exploring the state 
 
 * learn to use new language features
 * learn to use Spring Boot 3, Spring 6
+* learn to use Gradle with Kotlin
 * learn to use kubernetes related integrations (such as Vault)
 * provide backend for insight into a **Gitstafette Relay Cluster**
   * a **Gitstafette Relay Cluster** being one or more servers with one or more clients
@@ -27,6 +28,7 @@ Java demo application (testing spring boot 3, spring 6) for exploring the state 
 
 ## References
 
+* https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#running-your-application
 * https://docs.spring.io/spring-boot/docs/3.0.1/maven-plugin/reference/htmlsingle/
 * https://docs.spring.io/spring-boot/docs/3.0.1/reference/htmlsingle/#using.devtools
 * https://spring.io/guides/tutorials/rest/
