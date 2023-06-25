@@ -5,8 +5,10 @@ import net.kearos.gitstafette.explorer.client.GitstafetteClientClient;
 import net.kearos.gitstafette.explorer.client.GitstafetteServerClient;
 import net.kearos.gitstafette.explorer.model.Server;
 import net.kearos.gitstafette.explorer.model.WatchedRepositoryList;
+import net.kearos.gitstafette.grpc.WatchedRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,12 +50,12 @@ public class ServerController {
         return result;
     }
 
-    @GetMapping("/clients")
-    WatchedRepositoryList collectFromRemoteClients() {
+    @GetMapping(path="/clients", produces="application/json")
+    ResponseEntity<List<WatchedRepository>> collectFromRemoteClients() {
         logger.info("Collecting from remote client");
-        var result = gitstafetteClientClient.getWatchedRepositoryList();
-        logger.info("Result collected: {}", result);
-        return result;
+        var watchedRepositoryList = gitstafetteClientClient.getWatchedRepositoryList();
+        watchedRepositoryList.forEach(watchedRepository -> logger.info("Watched repository: {}", watchedRepository));
+        return ResponseEntity.ok(watchedRepositoryList);
     }
 
     // TODO implement HATEOAS

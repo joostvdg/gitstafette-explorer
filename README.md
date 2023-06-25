@@ -40,3 +40,7 @@ Java demo application (testing spring boot 3, spring 6) for exploring the state 
 * https://developer.okta.com/blog/2022/06/17/simple-crud-react-and-spring-boot
 * https://snyk.io/blog/create-sboms-java-maven-gradle/
 * https://javatodev.com/hashicorp-vault-spring-boot/
+* WSL2 and filesystem: https://stackoverflow.com/questions/68972448/why-is-wsl-extremely-slow-when-compared-with-native-windows-npm-yarn-processing
+* WSL2 and linux filesystem location: https://superuser.com/questions/1642403/wsl-for-linux-where-are-files-stored
+  * `cd ~` (in WSL2 ubuntu)
+  * `cd \\wsl.localhost\Ubuntu-CommPrev\home\joostvdg\projects\`

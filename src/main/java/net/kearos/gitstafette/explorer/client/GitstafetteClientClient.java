@@ -2,10 +2,11 @@ package net.kearos.gitstafette.explorer.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import net.kearos.gitstafette.explorer.model.WatchedRepositoryList;
 import net.kearos.gitstafette.grpc.GitstafetteGrpc;
 import net.kearos.gitstafette.grpc.WatchedRepositoriesRequest;
+import net.kearos.gitstafette.grpc.WatchedRepository;
 
+import java.util.List;
 
 
 @org.springframework.stereotype.Component
@@ -17,7 +18,7 @@ public class GitstafetteClientClient {
     }
 
 
-    public WatchedRepositoryList getWatchedRepositoryList() {
+    public List<WatchedRepository> getWatchedRepositoryList() {
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress(GitstafetteClientHost, GitstafetteClientPort)
                 .usePlaintext()
@@ -25,9 +26,9 @@ public class GitstafetteClientClient {
 
         var request = WatchedRepositoriesRequest.newBuilder().setClientId("explorer").build();
         GitstafetteGrpc.GitstafetteBlockingStub gitstafetteClient = GitstafetteGrpc.newBlockingStub(channel);
-        gitstafetteClient.watchedRepositories(request).getWatchedRepositoriesList().forEach(watchedRepository -> System.out.println(watchedRepository.toString()));
+        var response = gitstafetteClient.watchedRepositories(request);
 
         channel.shutdown();
-        return null;
+        return response.getWatchedRepositoriesList();
     }
 }
